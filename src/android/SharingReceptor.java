@@ -30,6 +30,8 @@ import android.util.Log;
  */
 public class SharingReceptor extends CordovaPlugin {
 
+    private static final String TAG = SharingReceptor.class.getSimpleName();
+
     // Constant that holds all the intent actions that we will handle.
     private static final Set<String> SEND_INTENTS = new HashSet<String>(Arrays.asList(
             Intent.ACTION_SEND,
@@ -44,6 +46,9 @@ public class SharingReceptor extends CordovaPlugin {
         JSONObject extras = SharingReceptor.serializeBundle(intent.getExtras());
         JSONObject intentJson = new JSONObject();
         intentJson.put("action", intent.getAction());
+        intentJson.put("data", SharingReceptor.safeJSONWrap(intent.getData()) );
+        intentJson.put("dataString", intent.getDataString());
+        intentJson.put("type", intent.getType());
         intentJson.put("extras", extras);
         JSONObject result = new JSONObject();
         result.put("platform", "android");
@@ -57,14 +62,27 @@ public class SharingReceptor extends CordovaPlugin {
         if ( bundle != null ) {
             Set<String> keys = bundle.keySet();
             for (String key : keys) {
+                Object value = bundle.get(key);
                 try {
-                    json.put(key, JSONObject.wrap(bundle.get(key)));
-                } catch(JSONException e) {
+                    json.put(key, SharingReceptor.safeJSONWrap(value));
+                } catch(Exception e) {
+                    Log.e(TAG,"Can't serialize key " + key,e);
                     throw new RuntimeException("Can't serialize bundle for key = " + key,e);
                 }
             }
         }
+        Log.i(TAG, "json -> " + json.toString());
         return json;
+    }
+
+    // Because JSONObject.wrap(value) returns null on failure (this is the case for HierarchicalUri instances for example)
+    private static Object safeJSONWrap(Object value) throws JSONException {
+        Object wrappedValue = JSONObject.wrap(value);
+        boolean wrappingHasFailed = (value != null && wrappedValue == null);
+        if ( wrappingHasFailed ) {
+            wrappedValue = value.toString(); // Fallback method
+        }
+        return wrappedValue;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////:
@@ -72,9 +90,7 @@ public class SharingReceptor extends CordovaPlugin {
     /////////////////////////////////////////////////////////////////////////////////////////:
 
 
-
     private CallbackContext listenerCallback = null;
-    private String TAG = this.getClass().getSimpleName();
 
 
     @Override
