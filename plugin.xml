@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://cordova.apache.org/ns/plugins/1.0"
+           id="cordova-sharingreceptor"
+      version="1.0.0">
+
+    <name>SharingReceptor</name>
+    <description>SharingReceptor for Cordova</description>
+    <license>MIT</license>
+    <keywords>cordova, phonegap, sharing, share, receptor, listener, intent, CFBundleDocumentTypes, ACTION_SEND</keywords>
+
+    <js-module src="www/sharingreceptor.js" name="SharingReceptor">
+        <clobbers target="cordova.SharingReceptor" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="SharingReceptor" >
+                <param name="android-package" value="org.apache.cordova.sharingreceptor.SharingReceptor"/>
+            </feature>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+        </config-file>
+        <source-file src="src/android/SharingReceptor.java" target-dir="src/org/apache/cordova/sharingreceptor" />
+    </platform>
+
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+            <array>
+                <dict>
+<!-- TODO
+                    <key>PackageName</key>
+                    <string>$PACKAGE_NAME</string>
+-->
+                </dict>
+            </array>
+        </config-file>
+    </platform>
+
+</plugin>
+
+

@@ -1,0 +1,33 @@
+{
+  "name": "cordova-sharingreceptor",
+  "version": "1.0.0",
+  "author": "Stample",
+  "license": "MIT",
+  "homepage": "https://github.com/stample/cordova-sharingreceptor",
+  "author": "Sébastien Lorber",
+  "description": "SharingReceptor",
+  "cordova": {
+    "id": "cordova-sharingreceptor",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stample/cordova-sharingreceptor"
+  },
+  "keywords": [
+    "cordova", 
+    "phonegap", 
+    "sharing", 
+    "share", 
+    "receptor", 
+    "listener", 
+    "intent", 
+    "CFBundleDocumentTypes", 
+    "ACTION_SEND",
+    "cordova-android",
+    "cordova-ios"
+  ]
+}
