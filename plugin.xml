@@ -37,13 +37,32 @@
 
     <!-- ios -->
     <platform name="ios">
-        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+        <config-file target="*-Info.plist" parent="CFBundleDocumentTypes">
             <array>
                 <dict>
-<!-- TODO
-                    <key>PackageName</key>
-                    <string>$PACKAGE_NAME</string>
--->
+
+
+                    <!-- TODO just a test ! -->
+                    <key>CFBundleTypeIconFiles</key>
+                    <array>
+                        <string>icon-76.png</string>
+                        <string>icon-76@2x.png</string>
+                    </array>
+
+                    <key>CFBundleTypeName</key>
+                    <string>Image</string>
+
+                    <key>CFBundleTypeRole</key>
+                    <string>Viewer</string>
+
+                    <key>LSHandlerRank</key>
+                    <string>Owner</string>
+
+                    <key>LSItemContentTypes</key>
+                    <array>
+                        <string>public.image</string>
+                    </array>
+
                 </dict>
             </array>
         </config-file>
