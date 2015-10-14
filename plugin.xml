@@ -25,47 +25,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="*/*" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.SEND_MULTIPLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="*/*" />
-            </intent-filter>
         </config-file>
         <source-file src="src/android/SharingReceptor.java" target-dir="src/org/apache/cordova/sharingreceptor" />
-    </platform>
-
-
-    <!-- ios -->
-    <platform name="ios">
-        <config-file target="*-Info.plist" parent="CFBundleDocumentTypes">
-            <array>
-                <dict>
-
-
-                    <!-- TODO just a test ! -->
-                    <key>CFBundleTypeIconFiles</key>
-                    <array>
-                        <string>icon-76.png</string>
-                        <string>icon-76@2x.png</string>
-                    </array>
-
-                    <key>CFBundleTypeName</key>
-                    <string>Image</string>
-
-                    <key>CFBundleTypeRole</key>
-                    <string>Viewer</string>
-
-                    <key>LSHandlerRank</key>
-                    <string>Owner</string>
-
-                    <key>LSItemContentTypes</key>
-                    <array>
-                        <string>public.image</string>
-                    </array>
-
-                </dict>
-            </array>
-        </config-file>
     </platform>
 
 </plugin>

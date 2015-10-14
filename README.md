@@ -4,7 +4,7 @@ A cordova plugin that permits to receive data sent from other applications (like
 
 It handles cases where app is started or resumed.
 
-It currently works for Android and iOS (contributors welcome).
+It currently works for Android only.
 
 
 ## Usage:
@@ -41,9 +41,7 @@ Here is an example of data that is send when sharing a web page with Chrome:
 
 ## iOS
 
-It uses the plist files
-
-TODO Work in progress
+Unfurtunatly this is really hard with iOS. You have to wait for iOS 8 and implement a Share Extension with native code
 
 
 ## Notes
