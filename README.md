@@ -1,10 +1,11 @@
 # cordova-sharingreceptor
 
-A cordova plugin that permits to receive data sent from other applications (like urls, images...), for Android and IOS.
-
+A cordova plugin that permits to receive data sent from other applications (like urls, images...)
 It handles cases where app is started or resumed.
 
-It currently works for Android only.
+This is for doc purpose, you should customize this plugin for your needs because currently I only made it work to share browser urls (like a clipper)
+
+For iOS, it is [harder but achievable!](http://stackoverflow.com/questions/26436544/share-image-using-share-extension-in-ios8)
 
 
 ## Usage:
@@ -38,10 +39,6 @@ Here is an example of data that is send when sharing a web page with Chrome:
 
 ```
 
-
-## iOS
-
-Unfurtunatly this is really hard with iOS. You have to wait for iOS 8 and implement a Share Extension with native code
 
 
 ## Notes
