@@ -25,7 +25,6 @@ import org.apache.cordova.PluginResult;
 import android.util.Log;
 
 /**
- *
  * @author lorber.sebastien@gmail.com
  */
 public class SharingReceptor extends CordovaPlugin {
@@ -46,7 +45,7 @@ public class SharingReceptor extends CordovaPlugin {
         JSONObject extras = SharingReceptor.serializeBundle(intent.getExtras());
         JSONObject intentJson = new JSONObject();
         intentJson.put("action", intent.getAction());
-        intentJson.put("data", SharingReceptor.safeJSONWrap(intent.getData()) );
+        intentJson.put("data", SharingReceptor.safeJSONWrap(intent.getData()));
         intentJson.put("dataString", intent.getDataString());
         intentJson.put("type", intent.getType());
         intentJson.put("extras", extras);
@@ -59,15 +58,15 @@ public class SharingReceptor extends CordovaPlugin {
     // See http://stackoverflow.com/a/21859000/82609
     private static JSONObject serializeBundle(Bundle bundle) throws JSONException {
         JSONObject json = new JSONObject();
-        if ( bundle != null ) {
+        if (bundle != null) {
             Set<String> keys = bundle.keySet();
             for (String key : keys) {
                 Object value = bundle.get(key);
                 try {
                     json.put(key, SharingReceptor.safeJSONWrap(value));
-                } catch(Exception e) {
-                    Log.e(TAG,"Can't serialize key " + key,e);
-                    throw new RuntimeException("Can't serialize bundle for key = " + key,e);
+                } catch (Exception e) {
+                    Log.e(TAG, "Can't serialize key " + key, e);
+                    throw new RuntimeException("Can't serialize bundle for key = " + key, e);
                 }
             }
         }
@@ -79,7 +78,7 @@ public class SharingReceptor extends CordovaPlugin {
     private static Object safeJSONWrap(Object value) throws JSONException {
         Object wrappedValue = JSONObject.wrap(value);
         boolean wrappingHasFailed = (value != null && wrappedValue == null);
-        if ( wrappingHasFailed ) {
+        if (wrappingHasFailed) {
             wrappedValue = value.toString(); // Fallback method
         }
         return wrappedValue;
@@ -89,35 +88,26 @@ public class SharingReceptor extends CordovaPlugin {
     /////////////////////////////////////////////////////////////////////////////////////////:
     /////////////////////////////////////////////////////////////////////////////////////////:
 
-
     private CallbackContext listenerCallback = null;
-
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
         try {
-            if ( action.equals("listen") ) {
+            if (action.equals("listen")) {
                 installListener(callbackContext);
                 return true;
-            }
-            else {
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION,"action ["+action+"] does not exist"));
+            } else {
+                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION, "action [" + action + "] does not exist"));
                 return false;
             }
-        }
-        catch (Exception e) {
-            Log.e(TAG,"Error while executing action ["+action+"]",e);
-            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR,e.getMessage()));
+        } catch (Exception e) {
+            Log.e(TAG, "Error while executing action [" + action + "]", e);
+            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, e.getMessage()));
             return false;
         }
     }
 
-
-
     private void installListener(CallbackContext callbackContext) {
-        if ( this.listenerCallback != null ) {
-            throw new RuntimeException("You already set a listener: it does not make sense to reset it.");
-        }
         this.listenerCallback = callbackContext;
 
         // handle the case where the app is started by a new intent:
@@ -134,24 +124,19 @@ public class SharingReceptor extends CordovaPlugin {
         // TODO would it be useful to replace current activity intent by new intent? Can it messes things up?
     }
 
-
-
-
     // We try to publish in the JS callback the intent data, if the intent is a send intent, and if the callback was correctly setup
     private void maybePublishIntent(Intent intent) {
-        if ( !SharingReceptor.isSendIntent(intent) ) {
+        if (!SharingReceptor.isSendIntent(intent)) {
             Log.i(TAG, "maybePublishIntent -> not publishing intent because the action name is not part of SEND_INTENTS=" + SEND_INTENTS);
-        }
-        else if ( this.listenerCallback == null ) {
+        } else if (this.listenerCallback == null) {
             Log.w(TAG, "maybePublishIntent -> not publishing intent because listener callback not set");
-        }
-        else {
+        } else {
 
             JSONObject intentJson;
             try {
                 intentJson = SharingReceptor.serializeIntent(intent);
             } catch (Exception e) {
-                throw new RuntimeException("Can't serialize intent " + intent,e);
+                throw new RuntimeException("Can't serialize intent " + intent, e);
             }
             Log.i(TAG, "maybePublishIntent -> will publish intent -> " + intentJson.toString());
             PluginResult result = new PluginResult(PluginResult.Status.OK, intentJson);
@@ -159,6 +144,4 @@ public class SharingReceptor extends CordovaPlugin {
             this.listenerCallback.sendPluginResult(result);
         }
     }
-
-
 }
